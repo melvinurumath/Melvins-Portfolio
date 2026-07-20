@@ -89,31 +89,30 @@ const App = () => {
       id: 'champagne-poetry',
       title: 'Champagne Poetry',
       artist: 'Drake',
-      note: "Certified Lover Boy's most slept-on opener.",
       artId: '1XgXCaZkBZXPdeQtMdAazstk4-ErbcEh8',
-      preview: 'https://p.scdn.co/mp3-preview/ae7603a040d85a7c7edc00d88b7e18fc3828233b'
+      preview: 'https://p.scdn.co/mp3-preview/ae7603a040d85a7c7edc00d88b7e18fc3828233b',
+      startAt: 0
     },
     {
       id: 'sultans-of-swing',
       title: 'Sultans Of Swing',
       artist: 'Dire Straits',
-      note: 'Guitar work that never gets old.',
       artId: '1HPe---5Q76jEzjz9q348ev6O1qvV1Fzn',
-      preview: 'https://p.scdn.co/mp3-preview/6c0bfa3651ea6c18e00fb5366b86655ca691a852'
+      preview: 'https://p.scdn.co/mp3-preview/6c0bfa3651ea6c18e00fb5366b86655ca691a852',
+      startAt: 0
     },
     {
       id: 'talk-to-you',
       title: 'Talk To You',
       artist: 'ANOTR, 54 Ultra',
-      note: 'Peak-hour energy for late-night drives.',
       artId: '17NSQlWYXVmmOSUjLgXxMHQ_OWao7PfJH',
-      preview: 'https://p.scdn.co/mp3-preview/b55c8fa4e31192a3e35ad53d3e889733f9cd9da1'
+      preview: 'https://p.scdn.co/mp3-preview/b55c8fa4e31192a3e35ad53d3e889733f9cd9da1',
+      startAt: 0
     },
     {
       id: 'khuda-jaane',
       title: 'Khuda Jaane',
       artist: 'Vishal-Shekhar, KK, Shilpa Rao',
-      note: "KK's voice never misses.",
       artId: '1f8zcnrxxv7-PG3AcejjxwBl_0qKCLvAo',
       preview: 'https://p.scdn.co/mp3-preview/d15f45f62158ffd00f02d3bf4265f562f00eb3ce'
     },
@@ -121,7 +120,6 @@ const App = () => {
       id: 'joycelyns-dance',
       title: "joycelyn's dance",
       artist: 'berlioz',
-      note: 'Found this deep in a house rabbit hole.',
       artId: '1cYYEQ6FjyR6b0JHdoJ3jkWWMjGE1bn6h',
       preview: 'https://p.scdn.co/mp3-preview/1c83efc81d5a7a4de66ac32182df5837880431d2'
     },
@@ -129,7 +127,6 @@ const App = () => {
       id: 'soso',
       title: 'soso',
       artist: 'OMAH LAY',
-      note: 'Afrobeats mood, on repeat all summer.',
       artId: '1N-pe5Ya-ToEonP9YaR8B9QKvuYCj7qc_',
       preview: 'https://p.scdn.co/mp3-preview/741047a98014af0ed64ecb4e4084a96adf1e9761'
     },
@@ -137,7 +134,6 @@ const App = () => {
       id: 'pearls',
       title: 'Pearls',
       artist: 'Sade',
-      note: 'Smooth as they come — a rainy day constant.',
       artId: '1_yvhNAtw7brTjiufzQ_mOvvtMpV7vCTt',
       preview: 'https://p.scdn.co/mp3-preview/73da696029c71e6607a74337bd0bb0c2d46b9f3c'
     },
@@ -145,13 +141,14 @@ const App = () => {
       id: 'jukebox-joints',
       title: 'Jukebox Joints',
       artist: 'A$AP Rocky ft. Joe Fox & Kanye West',
-      note: 'That beat switch still gets me every time.',
       artId: '1tyjFtlcv_ywH85sWfwCBHcdOgcSde3n4',
-      preview: 'https://p.scdn.co/mp3-preview/3aa2cbdf0a4ff4c97803b9653111814925413316'
+      preview: 'https://p.scdn.co/mp3-preview/3aa2cbdf0a4ff4c97803b9653111814925413316',
+      startAt: 0
     }
   ];
 
   const handleTrackEnter = (id) => {
+    const track = tracks.find((t) => t.id === id);
     Object.entries(audioRefs.current).forEach(([key, audio]) => {
       if (key !== id && audio) {
         audio.pause();
@@ -162,7 +159,7 @@ const App = () => {
 
     const audio = audioRefs.current[id];
     if (audio) {
-      audio.currentTime = 0;
+      audio.currentTime = track?.startAt ?? 0;
       audio.play().catch(() => {});
       setActiveTrack(id);
     }
@@ -270,7 +267,11 @@ const App = () => {
       <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrolled ? 'bg-[#F6F6F4]/90 backdrop-blur-2xl border-b border-[#232323]/10 py-4' : 'bg-transparent py-8'}`}>
         <div className="max-w-[90rem] mx-auto px-6 lg:px-12 flex items-center justify-between text-xs font-medium tracking-[0.15em] uppercase text-[#232323]/50">
           <div className="flex items-center gap-4 text-[#232323]">
-            <span className="font-semibold tracking-[0.2em] text-[#0A1B10]">Melvin</span>
+            <img
+              src={`${import.meta.env.BASE_URL}assets/logo-911.png`}
+              alt="Melvin Urumath"
+              className="w-9 h-9 rounded-full object-cover hairline"
+            />
           </div>
           <div className="hidden md:flex gap-12">
             <a href="#strategy" className="hover:text-[#0A1B10] transition-colors duration-500">Strategy</a>
@@ -313,9 +314,26 @@ const App = () => {
             Consulting, Marketing and Analytics experience.
           </p>
 
-          {/* Bold Middle Piece */}
-          <div className="inline-block px-8 py-4 bg-[#0A1B10] text-[#F6F6F4] text-sm md:text-lg font-bold uppercase tracking-[0.2em] hairline mb-16 shadow-lg transform -rotate-1 hover:rotate-0 transition-transform duration-300">
-            "DRIVEN BY CURIOSITY"
+          {/* Core Values — Three Boxes */}
+          <div className="flex flex-col sm:flex-row items-stretch gap-4 w-full max-w-3xl mx-auto mb-16">
+            <div className="group relative overflow-hidden hairline bg-[#0A1B10] text-[#F6F6F4] px-8 py-8 shadow-lg sm:basis-[45%] flex flex-col justify-center transition-transform duration-300 hover:-translate-y-1">
+              <p className="text-lg md:text-xl font-bold uppercase tracking-[0.2em]">Balance</p>
+              <p className="text-xs md:text-sm font-medium normal-case tracking-normal text-[#F6F6F4]/70 leading-relaxed mt-0 max-h-0 opacity-0 group-hover:mt-3 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-500">
+                Yin and yang — ambition means nothing without the stillness to hold it steady.
+              </p>
+            </div>
+            <div className="group relative overflow-hidden hairline bg-[#0A1B10] text-[#F6F6F4] px-6 py-8 shadow-lg sm:basis-[27.5%] flex flex-col justify-center transition-transform duration-300 hover:-translate-y-1">
+              <p className="text-sm md:text-base font-bold uppercase tracking-[0.15em]">Be Influential</p>
+              <p className="text-xs font-medium normal-case tracking-normal text-[#F6F6F4]/70 leading-relaxed mt-0 max-h-0 opacity-0 group-hover:mt-3 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-500">
+                Impact isn't a title — it's what changes in the room after you've left it.
+              </p>
+            </div>
+            <div className="group relative overflow-hidden hairline bg-[#0A1B10] text-[#F6F6F4] px-6 py-8 shadow-lg sm:basis-[27.5%] flex flex-col justify-center transition-transform duration-300 hover:-translate-y-1">
+              <p className="text-sm md:text-base font-bold uppercase tracking-[0.15em]">Always Curious</p>
+              <p className="text-xs font-medium normal-case tracking-normal text-[#F6F6F4]/70 leading-relaxed mt-0 max-h-0 opacity-0 group-hover:mt-3 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-500">
+                Say yes first, ask why later — everything happens exactly when it's supposed to.
+              </p>
+            </div>
           </div>
 
           {/* Image & Floating Glass Bubbles */}
@@ -582,8 +600,12 @@ const App = () => {
       </section>
 
       {/* --- 03.5 // LISTENING (DARK RECORD SHELF) --- */}
-      <section id="listening" className="py-32 relative bg-[#0A1B10] border-t border-[#232323]/10">
-        <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
+      <section
+        id="listening"
+        className="py-32 relative bg-[#0A1B10] bg-cover bg-center border-t border-[#232323]/10"
+        style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url(${import.meta.env.BASE_URL}assets/listening-bg.jpg)` }}
+      >
+        <div className="max-w-[100rem] mx-auto px-6 lg:px-12 relative z-10">
 
           <div className="mb-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-b border-[#F6F6F4]/10 pb-12">
             <div>
@@ -594,9 +616,8 @@ const App = () => {
               <h2 className="text-6xl md:text-8xl font-black tracking-tighter text-[#F6F6F4] uppercase">Listening.</h2>
             </div>
             <div className="text-right max-w-sm">
-              <p className="text-sm font-bold text-[#F6F6F4]/50 leading-relaxed uppercase tracking-widest">
-                Hover a card. <br/>
-                <span className="text-[#F6F6F4]/80">15-Second Previews.</span>
+              <p className="text-sm font-bold text-[#F6F6F4]/80 leading-relaxed uppercase tracking-widest">
+                Music as an Art
               </p>
             </div>
           </div>
@@ -611,7 +632,10 @@ const App = () => {
                 className="group/track relative shrink-0 w-[200px] sm:w-[220px] cursor-pointer"
               >
                 <audio
-                  ref={(el) => (audioRefs.current[track.id] = el)}
+                  ref={(el) => {
+                    if (el) el.volume = 0.4;
+                    audioRefs.current[track.id] = el;
+                  }}
                   preload="none"
                   onTimeUpdate={(e) => handleTimeUpdate(track.id, e)}
                 >
@@ -649,9 +673,6 @@ const App = () => {
                 <p className="text-xs italic text-[#F6F6F4]/50 mt-0.5 truncate">
                   {track.artist}
                 </p>
-                <p className="text-[10px] text-[#F6F6F4]/40 mt-1.5 leading-relaxed">
-                  {track.note}
-                </p>
               </div>
             ))}
           </div>
@@ -679,8 +700,8 @@ const App = () => {
           </div>
         </div>
 
-        {/* --- Subsection 1: Alumni Mentorship Program --- */}
-        <div className="mb-32">
+        {/* --- Alumni Mentorship Program --- */}
+        <div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
             <div className="lg:col-span-4 flex flex-col justify-center">
@@ -704,19 +725,19 @@ const App = () => {
               </div>
 
               <h3 className="text-5xl md:text-6xl font-black tracking-tighter text-[#232323] mb-4 uppercase leading-none">
-                130,000 <br/> <span className="text-[#BA9A5A]">Impressions.</span>
+                Co-President. <br/> <span className="text-[#BA9A5A]">25-Person Team.</span>
               </h3>
               <p className="text-xs font-bold tracking-widest uppercase text-[#232323]/50 mb-8">
-                "IN 30 DAYS"
+                "130,000+ IMPRESSIONS DRIVEN"
               </p>
 
               <p className="text-sm font-medium text-[#232323]/80 leading-relaxed mb-8 border-l-2 border-[#BA9A5A] pl-4">
-                Engineered highly specific organic reach by dissecting and leveraging strict LinkedIn algorithmic behaviors.
+                Leading the Alumni Mentorship Program as Co-President — owning day-to-day operations for a 25-person team while engineering the organic reach strategy behind 130K+ impressions in 30 days.
               </p>
 
               <div className="flex items-center justify-between text-[10px] font-bold tracking-widest uppercase text-[#232323] border-t border-[#232323]/10 pt-4">
-                <span>"FORMAT"</span>
-                <span className="text-[#0A1B10]">"MEDIA CAMPAIGN"</span>
+                <span>"ROLE"</span>
+                <span className="text-[#0A1B10]">"CO-PRESIDENT, AMP"</span>
               </div>
             </div>
 
@@ -734,81 +755,6 @@ const App = () => {
                     <span className="text-[10px] font-bold tracking-widest uppercase bg-white/90 backdrop-blur-md px-3 py-1 hairline text-[#232323]">LAZSOC ANNOUNCEMENT</span>
                   </div>
                 </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        {/* --- Subsection 2: Prism Resources --- */}
-        <div>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-
-            <div className="lg:col-span-4 flex flex-col justify-center order-1 lg:order-2">
-
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center w-full mb-8 gap-8 sm:gap-4 relative">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#232323] text-[#F6F6F4] text-[10px] font-bold uppercase tracking-widest hairline rounded-none shadow-[2px_2px_0px_rgba(35,35,35,1)] relative z-10 self-start">
-                  "PRISM RESOURCES"
-                </div>
-
-                {/* Hovering PRISM Logo with Halo Effect - Far Right */}
-                <div className="relative z-20 float-1 self-end sm:self-center">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-[#BA9A5A] opacity-50 blur-2xl rounded-full scale-[2] pointer-events-none"></div>
-                    <img
-                      src="https://drive.google.com/thumbnail?id=1HxlFdMscwFGpgbcXIo7XuF94895eb9ht&sz=w200"
-                      alt="PRISM Resources Logo"
-                      className="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] relative z-10 transform rotate-6 hover:rotate-0 hover:scale-110 transition-all duration-500 cursor-pointer"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <h3 className="text-5xl md:text-6xl font-black tracking-tighter text-[#232323] mb-4 uppercase leading-none">
-                The Most <br/> <span className="text-[#0A1B10]">Viewed Video.</span>
-              </h3>
-              <p className="text-xs font-bold tracking-widest uppercase text-[#232323]/50 mb-8">
-                "RECORD ENGAGEMENT"
-              </p>
-
-              <p className="text-sm font-medium text-[#232323]/80 leading-relaxed mb-8 border-l-2 border-[#0A1B10] pl-4">
-                Orchestrated end-to-end production—from scripting to final cut—while acting as the primary strategic liaison between HRL and PRISM Resources to align cross-departmental messaging.
-              </p>
-
-              <div className="flex items-center justify-between text-[10px] font-bold tracking-widest uppercase text-[#232323] border-t border-[#232323]/10 pt-4">
-                <span>"FORMAT"</span>
-                <span className="text-[#0A1B10]">"SHORT-FORM VERTICAL"</span>
-              </div>
-            </div>
-
-            {/* Media Placeholders Grid */}
-            <div className="lg:col-span-8 w-full order-2 lg:order-1">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                {/* Media 1 */}
-                <div className="hairline bg-white/60 p-4 snap-shadow">
-                  <div className="relative aspect-[9/16] w-full overflow-hidden hairline bg-[#232323]">
-                    <iframe
-                      src="https://drive.google.com/file/d/1bjmDNFWzsJJDVfIBnly642YqRaBNHP8S/preview"
-                      className="absolute top-0 left-0 w-full h-full scale-[1.02] filter contrast-110 saturate-[0.85]"
-                      allow="autoplay"
-                      title="PRISM Resources HRL Liaison Video 1"
-                    ></iframe>
-                  </div>
-                </div>
-
-                {/* Media 2 */}
-                <div className="hairline bg-white/60 p-4 snap-shadow">
-                  <div className="relative aspect-[9/16] w-full overflow-hidden hairline bg-[#232323]">
-                    <iframe
-                      src="https://drive.google.com/file/d/1RkfNMGzDem0K8B-rM9Iux3edFXpu4GqZ/preview"
-                      className="absolute top-0 left-0 w-full h-full scale-[1.02] filter contrast-110 saturate-[0.85]"
-                      allow="autoplay"
-                      title="PRISM Resources HRL Liaison Video 2"
-                    ></iframe>
-                  </div>
-                </div>
-
               </div>
             </div>
 
