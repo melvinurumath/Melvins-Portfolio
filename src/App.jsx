@@ -86,20 +86,33 @@ const App = () => {
 
   const tracks = [
     {
-      id: 'champagne-poetry',
-      title: 'Champagne Poetry',
-      artist: 'Drake',
-      artId: '1XgXCaZkBZXPdeQtMdAazstk4-ErbcEh8',
-      preview: 'https://p.scdn.co/mp3-preview/ae7603a040d85a7c7edc00d88b7e18fc3828233b',
+      id: 'pearls',
+      title: 'Pearls',
+      artist: 'Sade',
+      artId: '1_yvhNAtw7brTjiufzQ_mOvvtMpV7vCTt',
+      preview: 'https://p.scdn.co/mp3-preview/73da696029c71e6607a74337bd0bb0c2d46b9f3c'
+    },
+    {
+      id: 'jukebox-joints',
+      title: 'Jukebox Joints',
+      artist: 'A$AP Rocky ft. Joe Fox & Kanye West',
+      artId: '1tyjFtlcv_ywH85sWfwCBHcdOgcSde3n4',
+      preview: 'https://p.scdn.co/mp3-preview/3aa2cbdf0a4ff4c97803b9653111814925413316',
       startAt: 0
     },
     {
-      id: 'sultans-of-swing',
-      title: 'Sultans Of Swing',
-      artist: 'Dire Straits',
-      artId: '1HPe---5Q76jEzjz9q348ev6O1qvV1Fzn',
-      preview: 'https://p.scdn.co/mp3-preview/6c0bfa3651ea6c18e00fb5366b86655ca691a852',
-      startAt: 0
+      id: 'soso',
+      title: 'soso',
+      artist: 'OMAH LAY',
+      artId: '1N-pe5Ya-ToEonP9YaR8B9QKvuYCj7qc_',
+      preview: 'https://p.scdn.co/mp3-preview/741047a98014af0ed64ecb4e4084a96adf1e9761'
+    },
+    {
+      id: 'joycelyns-dance',
+      title: "joycelyn's dance",
+      artist: 'berlioz',
+      artId: '1cYYEQ6FjyR6b0JHdoJ3jkWWMjGE1bn6h',
+      preview: 'https://p.scdn.co/mp3-preview/1c83efc81d5a7a4de66ac32182df5837880431d2'
     },
     {
       id: 'talk-to-you',
@@ -117,32 +130,19 @@ const App = () => {
       preview: 'https://p.scdn.co/mp3-preview/d15f45f62158ffd00f02d3bf4265f562f00eb3ce'
     },
     {
-      id: 'joycelyns-dance',
-      title: "joycelyn's dance",
-      artist: 'berlioz',
-      artId: '1cYYEQ6FjyR6b0JHdoJ3jkWWMjGE1bn6h',
-      preview: 'https://p.scdn.co/mp3-preview/1c83efc81d5a7a4de66ac32182df5837880431d2'
+      id: 'champagne-poetry',
+      title: 'Champagne Poetry',
+      artist: 'Drake',
+      artId: '1XgXCaZkBZXPdeQtMdAazstk4-ErbcEh8',
+      preview: 'https://p.scdn.co/mp3-preview/ae7603a040d85a7c7edc00d88b7e18fc3828233b',
+      startAt: 0
     },
     {
-      id: 'soso',
-      title: 'soso',
-      artist: 'OMAH LAY',
-      artId: '1N-pe5Ya-ToEonP9YaR8B9QKvuYCj7qc_',
-      preview: 'https://p.scdn.co/mp3-preview/741047a98014af0ed64ecb4e4084a96adf1e9761'
-    },
-    {
-      id: 'pearls',
-      title: 'Pearls',
-      artist: 'Sade',
-      artId: '1_yvhNAtw7brTjiufzQ_mOvvtMpV7vCTt',
-      preview: 'https://p.scdn.co/mp3-preview/73da696029c71e6607a74337bd0bb0c2d46b9f3c'
-    },
-    {
-      id: 'jukebox-joints',
-      title: 'Jukebox Joints',
-      artist: 'A$AP Rocky ft. Joe Fox & Kanye West',
-      artId: '1tyjFtlcv_ywH85sWfwCBHcdOgcSde3n4',
-      preview: 'https://p.scdn.co/mp3-preview/3aa2cbdf0a4ff4c97803b9653111814925413316',
+      id: 'sultans-of-swing',
+      title: 'Sultans Of Swing',
+      artist: 'Dire Straits',
+      artId: '1HPe---5Q76jEzjz9q348ev6O1qvV1Fzn',
+      preview: 'https://p.scdn.co/mp3-preview/6c0bfa3651ea6c18e00fb5366b86655ca691a852',
       startAt: 0
     }
   ];
@@ -159,6 +159,7 @@ const App = () => {
 
     const audio = audioRefs.current[id];
     if (audio) {
+      audio.load();
       audio.currentTime = track?.startAt ?? 0;
       audio.play().catch(() => {});
       setActiveTrack(id);
@@ -314,24 +315,24 @@ const App = () => {
             Consulting, Marketing and Analytics experience.
           </p>
 
-          {/* Core Values — Three Boxes */}
+          {/* Core Values: Three Boxes */}
           <div className="flex flex-col sm:flex-row items-stretch gap-4 w-full max-w-3xl mx-auto mb-16">
-            <div className="group relative overflow-hidden hairline bg-[#0A1B10] text-[#F6F6F4] px-8 py-8 shadow-lg sm:basis-[45%] flex flex-col justify-center transition-transform duration-300 hover:-translate-y-1">
-              <p className="text-lg md:text-xl font-bold uppercase tracking-[0.2em]">Balance</p>
-              <p className="text-xs md:text-sm font-medium normal-case tracking-normal text-[#F6F6F4]/70 leading-relaxed mt-0 max-h-0 opacity-0 group-hover:mt-3 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-500">
-                Yin and yang — ambition means nothing without the stillness to hold it steady.
-              </p>
-            </div>
             <div className="group relative overflow-hidden hairline bg-[#0A1B10] text-[#F6F6F4] px-6 py-8 shadow-lg sm:basis-[27.5%] flex flex-col justify-center transition-transform duration-300 hover:-translate-y-1">
               <p className="text-sm md:text-base font-bold uppercase tracking-[0.15em]">Be Influential</p>
               <p className="text-xs font-medium normal-case tracking-normal text-[#F6F6F4]/70 leading-relaxed mt-0 max-h-0 opacity-0 group-hover:mt-3 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-500">
-                Impact isn't a title — it's what changes in the room after you've left it.
+                Impact isn't a title. It's what changes in the room after you've left it.
+              </p>
+            </div>
+            <div className="group relative overflow-hidden hairline bg-[#F6F6F4] text-[#232323] px-8 py-8 shadow-lg sm:basis-[45%] flex flex-col justify-center transition-transform duration-300 hover:-translate-y-1">
+              <p className="text-lg md:text-xl font-bold uppercase tracking-[0.2em]">Balance</p>
+              <p className="text-xs md:text-sm font-medium normal-case tracking-normal text-[#232323]/70 leading-relaxed mt-0 max-h-0 opacity-0 group-hover:mt-3 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-500">
+                Presence over stability. The moment in front of you is the only one that's real.
               </p>
             </div>
             <div className="group relative overflow-hidden hairline bg-[#0A1B10] text-[#F6F6F4] px-6 py-8 shadow-lg sm:basis-[27.5%] flex flex-col justify-center transition-transform duration-300 hover:-translate-y-1">
               <p className="text-sm md:text-base font-bold uppercase tracking-[0.15em]">Always Curious</p>
               <p className="text-xs font-medium normal-case tracking-normal text-[#F6F6F4]/70 leading-relaxed mt-0 max-h-0 opacity-0 group-hover:mt-3 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-500">
-                Say yes first, ask why later — everything happens exactly when it's supposed to.
+                Say yes first, ask why later. Everything happens exactly when it's supposed to.
               </p>
             </div>
           </div>
@@ -405,7 +406,7 @@ const App = () => {
               Defending the <br/> <span className="text-[#0A1B10]">Xbox Strategy.</span>
             </h2>
             <p className="text-lg font-medium text-[#232323]/70 leading-relaxed mb-12">
-              Four intense rounds. Four distinct cases. The culmination was building a bulletproof growth funnel for Xbox Game Pass and defending it live in front of 40+ CMOs and executives. It required absolute precision—stripping away corporate fluff and proving the numbers under the highest level of scrutiny.
+              Four intense rounds. Four distinct cases. The culmination was building a bulletproof growth funnel for Xbox Game Pass and defending it live in front of 40+ CMOs and executives. It required absolute precision, stripping away corporate fluff and proving the numbers under the highest level of scrutiny.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-12">
@@ -622,14 +623,14 @@ const App = () => {
             </div>
           </div>
 
-          {/* Horizontal Track Row */}
-          <div className="flex gap-6 overflow-x-auto pb-6">
+          {/* Track Grid (2 rows x 4 columns) */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
             {tracks.map((track) => (
               <div
                 key={track.id}
                 onMouseEnter={() => handleTrackEnter(track.id)}
                 onMouseLeave={() => handleTrackLeave(track.id)}
-                className="group/track relative shrink-0 w-[200px] sm:w-[220px] cursor-pointer"
+                className="group/track relative cursor-pointer"
               >
                 <audio
                   ref={(el) => {
@@ -732,7 +733,7 @@ const App = () => {
               </p>
 
               <p className="text-sm font-medium text-[#232323]/80 leading-relaxed mb-8 border-l-2 border-[#BA9A5A] pl-4">
-                Leading the Alumni Mentorship Program as Co-President — owning day-to-day operations for a 25-person team while engineering the organic reach strategy behind 130K+ impressions in 30 days.
+                Leading the Alumni Mentorship Program as Co-President, owning day-to-day operations for a 25-person team while engineering the organic reach strategy behind 130K+ impressions in 30 days.
               </p>
 
               <div className="flex items-center justify-between text-[10px] font-bold tracking-widest uppercase text-[#232323] border-t border-[#232323]/10 pt-4">
