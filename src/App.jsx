@@ -268,7 +268,7 @@ const App = () => {
         <div className="max-w-[90rem] mx-auto px-6 lg:px-12 flex items-center justify-between text-xs font-medium tracking-[0.15em] uppercase text-[#232323]/50">
           <div className="flex items-center gap-4 text-[#232323]">
             <img
-              src={`${import.meta.env.BASE_URL}assets/logo-911.png`}
+              src="https://drive.google.com/thumbnail?id=1iOhrD7I5CLW53E-eZua7qAKmNkgu4Yak&sz=w100"
               alt="Melvin Urumath"
               className="w-9 h-9 rounded-full object-cover hairline"
             />
@@ -603,7 +603,7 @@ const App = () => {
       <section
         id="listening"
         className="py-32 relative bg-[#0A1B10] bg-cover bg-center border-t border-[#232323]/10"
-        style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url(${import.meta.env.BASE_URL}assets/listening-bg.jpg)` }}
+        style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url(https://drive.google.com/thumbnail?id=1o47MyEZxSAFGBqHr_aJYq9-IJnAp6cuS&sz=w1920)` }}
       >
         <div className="max-w-[100rem] mx-auto px-6 lg:px-12 relative z-10">
 
