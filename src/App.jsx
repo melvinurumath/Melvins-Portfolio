@@ -467,9 +467,7 @@ const App = () => {
 
         {/* Dynamic Grid Layout for Briefs */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {caseCompetitions.map((comp, idx) => {
-            const isCentered = comp.title === 'LazCup' || comp.title === 'Greenovation Challenge';
-            return (
+          {caseCompetitions.slice(0, 3).map((comp, idx) => (
             <div key={idx} className="bg-[#F6F6F4] hairline p-5 group snap-shadow flex flex-col relative h-full">
 
               {/* Image & Hover Logo Banner */}
@@ -493,8 +491,8 @@ const App = () => {
               </div>
 
               {/* Text Meta */}
-              <div className={`flex-grow flex flex-col ${isCentered ? 'items-center text-center' : ''}`}>
-                <div className={`flex items-center text-[9px] font-bold tracking-widest uppercase text-[#232323]/50 border-b border-[#232323]/10 pb-2 mb-3 ${isCentered ? 'justify-center gap-4' : 'justify-between'}`}>
+              <div className="flex-grow flex flex-col">
+                <div className="flex justify-between items-center text-[9px] font-bold tracking-widest uppercase text-[#232323]/50 border-b border-[#232323]/10 pb-2 mb-3">
                   <span className="text-[#0A1B10]">{comp.focus}</span>
                   <span>{comp.date}</span>
                 </div>
@@ -506,14 +504,61 @@ const App = () => {
                   {comp.company}
                 </h4>
 
-                <p className={`text-sm font-medium text-[#232323]/80 leading-relaxed mb-4 mt-auto ${isCentered ? 'max-w-[85%]' : 'border-l-2 border-[#232323]/20 pl-3'}`}>
+                <p className="text-sm font-medium text-[#232323]/80 leading-relaxed mb-4 mt-auto border-l-2 border-[#232323]/20 pl-3">
                   {comp.desc}
                 </p>
               </div>
 
             </div>
-            );
-          })}
+          ))}
+        </div>
+
+        {/* LazCup + Greenovation: centered as a group beneath the main grid */}
+        <div className="flex flex-wrap justify-center gap-8 mt-8">
+          {caseCompetitions.slice(3).map((comp, idx) => (
+            <div key={idx} className="bg-[#F6F6F4] hairline p-5 group snap-shadow flex flex-col relative w-full md:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.334rem)]">
+
+              {/* Image & Hover Logo Banner */}
+              <div className="relative w-full aspect-[4/3] bg-[#EAE6DF] hairline mb-5 overflow-hidden">
+                <div className="absolute inset-0 bg-[#0A1B10]/10 mix-blend-multiply group-hover:bg-transparent transition-colors duration-700 z-10 pointer-events-none"></div>
+                <img
+                  src={`https://drive.google.com/thumbnail?id=${comp.mediaId}&sz=w800`}
+                  alt={comp.title}
+                  className="w-full h-full object-cover filter grayscale-[20%] contrast-110 sepia-[10%] group-hover:grayscale-0 group-hover:sepia-0 transition-all duration-700 group-hover:scale-105"
+                />
+
+                {/* Glowing Halo Logo (Top Right) */}
+                <div className="absolute top-4 right-4 z-20">
+                  <div className="absolute inset-0 bg-[#BA9A5A] opacity-0 group-hover:opacity-70 blur-xl rounded-full scale-[2] transition-opacity duration-500 pointer-events-none"></div>
+                  <img
+                    src={`https://drive.google.com/thumbnail?id=${comp.logoId}&sz=w200`}
+                    alt={comp.company}
+                    className="w-10 h-10 md:w-12 md:h-12 object-contain relative z-10 drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)] bg-white/80 backdrop-blur-sm rounded-full p-2 hairline"
+                  />
+                </div>
+              </div>
+
+              {/* Text Meta */}
+              <div className="flex-grow flex flex-col">
+                <div className="flex justify-between items-center text-[9px] font-bold tracking-widest uppercase text-[#232323]/50 border-b border-[#232323]/10 pb-2 mb-3">
+                  <span className="text-[#0A1B10]">{comp.focus}</span>
+                  <span>{comp.date}</span>
+                </div>
+
+                <h3 className="text-2xl font-bold tracking-tight text-[#232323] mb-1">
+                  {comp.title}
+                </h3>
+                <h4 className="text-xs font-bold tracking-widest uppercase text-[#BA9A5A] mb-4">
+                  {comp.company}
+                </h4>
+
+                <p className="text-sm font-medium text-[#232323]/80 leading-relaxed mb-4 mt-auto border-l-2 border-[#232323]/20 pl-3">
+                  {comp.desc}
+                </p>
+              </div>
+
+            </div>
+          ))}
         </div>
 
       </section>
