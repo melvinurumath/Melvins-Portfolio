@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   ArrowRight,
   Play,
@@ -6,7 +6,8 @@ import {
   MonitorPlay,
   Smartphone,
   Camera,
-  FolderArchive
+  FolderArchive,
+  Music2
 } from 'lucide-react';
 
 // --- CUSTOM STYLES FOR CINEMATIC ANIMATIONS & ANALOG GRAIN ---
@@ -73,12 +74,120 @@ const customStyles = `
 
 const App = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [activeTrack, setActiveTrack] = useState(null);
+  const [progress, setProgress] = useState({});
+  const audioRefs = useRef({});
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const tracks = [
+    {
+      id: 'champagne-poetry',
+      title: 'Champagne Poetry',
+      artist: 'Drake',
+      note: "Certified Lover Boy's most slept-on opener.",
+      artId: '1XgXCaZkBZXPdeQtMdAazstk4-ErbcEh8',
+      preview: 'https://p.scdn.co/mp3-preview/ae7603a040d85a7c7edc00d88b7e18fc3828233b'
+    },
+    {
+      id: 'sultans-of-swing',
+      title: 'Sultans Of Swing',
+      artist: 'Dire Straits',
+      note: 'Guitar work that never gets old.',
+      artId: '1HPe---5Q76jEzjz9q348ev6O1qvV1Fzn',
+      preview: 'https://p.scdn.co/mp3-preview/6c0bfa3651ea6c18e00fb5366b86655ca691a852'
+    },
+    {
+      id: 'talk-to-you',
+      title: 'Talk To You',
+      artist: 'ANOTR, 54 Ultra',
+      note: 'Peak-hour energy for late-night drives.',
+      artId: '17NSQlWYXVmmOSUjLgXxMHQ_OWao7PfJH',
+      preview: 'https://p.scdn.co/mp3-preview/b55c8fa4e31192a3e35ad53d3e889733f9cd9da1'
+    },
+    {
+      id: 'khuda-jaane',
+      title: 'Khuda Jaane',
+      artist: 'Vishal-Shekhar, KK, Shilpa Rao',
+      note: "KK's voice never misses.",
+      artId: '1f8zcnrxxv7-PG3AcejjxwBl_0qKCLvAo',
+      preview: 'https://p.scdn.co/mp3-preview/d15f45f62158ffd00f02d3bf4265f562f00eb3ce'
+    },
+    {
+      id: 'joycelyns-dance',
+      title: "joycelyn's dance",
+      artist: 'berlioz',
+      note: 'Found this deep in a house rabbit hole.',
+      artId: '1cYYEQ6FjyR6b0JHdoJ3jkWWMjGE1bn6h',
+      preview: 'https://p.scdn.co/mp3-preview/1c83efc81d5a7a4de66ac32182df5837880431d2'
+    },
+    {
+      id: 'soso',
+      title: 'soso',
+      artist: 'OMAH LAY',
+      note: 'Afrobeats mood, on repeat all summer.',
+      artId: '1N-pe5Ya-ToEonP9YaR8B9QKvuYCj7qc_',
+      preview: 'https://p.scdn.co/mp3-preview/741047a98014af0ed64ecb4e4084a96adf1e9761'
+    },
+    {
+      id: 'pearls',
+      title: 'Pearls',
+      artist: 'Sade',
+      note: 'Smooth as they come — a rainy day constant.',
+      artId: '1_yvhNAtw7brTjiufzQ_mOvvtMpV7vCTt',
+      preview: 'https://p.scdn.co/mp3-preview/73da696029c71e6607a74337bd0bb0c2d46b9f3c'
+    },
+    {
+      id: 'jukebox-joints',
+      title: 'Jukebox Joints',
+      artist: 'A$AP Rocky ft. Joe Fox & Kanye West',
+      note: 'That beat switch still gets me every time.',
+      artId: '1tyjFtlcv_ywH85sWfwCBHcdOgcSde3n4',
+      preview: 'https://p.scdn.co/mp3-preview/3aa2cbdf0a4ff4c97803b9653111814925413316'
+    }
+  ];
+
+  const handleTrackEnter = (id) => {
+    Object.entries(audioRefs.current).forEach(([key, audio]) => {
+      if (key !== id && audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    });
+    setProgress((prev) => ({ ...prev, ...Object.fromEntries(tracks.filter(t => t.id !== id).map(t => [t.id, 0])) }));
+
+    const audio = audioRefs.current[id];
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+      setActiveTrack(id);
+    }
+  };
+
+  const handleTrackLeave = (id) => {
+    const audio = audioRefs.current[id];
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+    setProgress((prev) => ({ ...prev, [id]: 0 }));
+    setActiveTrack((prev) => (prev === id ? null : prev));
+  };
+
+  const handleTimeUpdate = (id, e) => {
+    const audio = e.target;
+    if (audio.currentTime >= 15) {
+      audio.pause();
+      audio.currentTime = 0;
+      setProgress((prev) => ({ ...prev, [id]: 0 }));
+      return;
+    }
+    setProgress((prev) => ({ ...prev, [id]: (audio.currentTime / 15) * 100 }));
+  };
 
   const caseCompetitions = [
     {
@@ -167,6 +276,7 @@ const App = () => {
             <a href="#strategy" className="hover:text-[#0A1B10] transition-colors duration-500">Strategy</a>
             <a href="#archive" className="hover:text-[#0A1B10] transition-colors duration-500">Case Competitions</a>
             <a href="#creative" className="hover:text-[#0A1B10] transition-colors duration-500">Content Creation</a>
+            <a href="#listening" className="hover:text-[#0A1B10] transition-colors duration-500">Listening</a>
             <a href="#growth" className="hover:text-[#0A1B10] transition-colors duration-500">Impact</a>
             <a href="#experience" className="hover:text-[#0A1B10] transition-colors duration-500">Experience</a>
           </div>
@@ -468,6 +578,84 @@ const App = () => {
 
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* --- 03.5 // LISTENING (DARK RECORD SHELF) --- */}
+      <section id="listening" className="py-32 relative bg-[#0A1B10] border-t border-[#232323]/10">
+        <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
+
+          <div className="mb-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-b border-[#F6F6F4]/10 pb-12">
+            <div>
+              <div className="flex items-center gap-3 mb-6 text-[#BA9A5A]">
+                <Music2 size={16} />
+                <p className="text-xs font-bold tracking-[0.2em] uppercase">On Repeat</p>
+              </div>
+              <h2 className="text-6xl md:text-8xl font-black tracking-tighter text-[#F6F6F4] uppercase">Listening.</h2>
+            </div>
+            <div className="text-right max-w-sm">
+              <p className="text-sm font-bold text-[#F6F6F4]/50 leading-relaxed uppercase tracking-widest">
+                Hover a card. <br/>
+                <span className="text-[#F6F6F4]/80">15-Second Previews.</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Horizontal Track Row */}
+          <div className="flex gap-6 overflow-x-auto pb-6">
+            {tracks.map((track) => (
+              <div
+                key={track.id}
+                onMouseEnter={() => handleTrackEnter(track.id)}
+                onMouseLeave={() => handleTrackLeave(track.id)}
+                className="group/track relative shrink-0 w-[200px] sm:w-[220px] cursor-pointer"
+              >
+                <audio
+                  ref={(el) => (audioRefs.current[track.id] = el)}
+                  preload="none"
+                  onTimeUpdate={(e) => handleTimeUpdate(track.id, e)}
+                >
+                  <source src={track.preview} type="audio/mpeg" />
+                </audio>
+
+                <div className="relative aspect-square w-full overflow-hidden border border-[#F6F6F4]/10 transition-all duration-500 group-hover/track:scale-[1.04] group-hover/track:border-[#BA9A5A]/60 group-hover/track:shadow-[0_0_30px_rgba(186,154,90,0.35)]">
+                  <img
+                    src={`https://drive.google.com/thumbnail?id=${track.artId}&sz=w500`}
+                    alt={`${track.title} album art`}
+                    className="w-full h-full object-cover filter grayscale-[20%] contrast-110 group-hover/track:grayscale-0 transition-all duration-500"
+                  />
+                  <div className="absolute inset-0 bg-[#0A1B10]/20 group-hover/track:bg-transparent transition-colors duration-500 pointer-events-none"></div>
+
+                  {/* Play indicator */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/track:opacity-100 transition-opacity duration-300">
+                    <div className="w-10 h-10 rounded-full bg-[#F6F6F4]/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                      <Play size={14} className="text-[#0A1B10] ml-0.5" fill="currentColor" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Progress Bar */}
+                <div className="h-[2px] w-full bg-[#F6F6F4]/10 mt-3 overflow-hidden">
+                  <div
+                    className="h-full bg-[#BA9A5A]"
+                    style={{ width: `${progress[track.id] || 0}%`, transition: activeTrack === track.id ? 'width 0.1s linear' : 'none' }}
+                  ></div>
+                </div>
+
+                {/* Track Meta */}
+                <h3 className="text-sm font-bold text-[#F6F6F4] mt-3 leading-tight truncate">
+                  {track.title}
+                </h3>
+                <p className="text-xs italic text-[#F6F6F4]/50 mt-0.5 truncate">
+                  {track.artist}
+                </p>
+                <p className="text-[10px] text-[#F6F6F4]/40 mt-1.5 leading-relaxed">
+                  {track.note}
+                </p>
+              </div>
+            ))}
+          </div>
+
         </div>
       </section>
 
