@@ -320,19 +320,19 @@ const App = () => {
             <div className="group relative overflow-hidden hairline bg-[#0A1B10] text-[#F6F6F4] px-6 py-8 shadow-lg sm:basis-[27.5%] flex flex-col justify-center transition-transform duration-300 hover:-translate-y-1">
               <p className="text-sm md:text-base font-bold uppercase tracking-[0.15em]">Be Influential</p>
               <p className="text-xs font-medium normal-case tracking-normal text-[#F6F6F4]/70 leading-relaxed mt-0 max-h-0 opacity-0 group-hover:mt-3 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-500">
-                Impact isn't a title. It's what changes in the room after you've left it.
+                A room reacts to what you do in it, not what's printed on your card.
               </p>
             </div>
             <div className="group relative overflow-hidden hairline bg-[#F6F6F4] text-[#232323] px-8 py-8 shadow-lg sm:basis-[45%] flex flex-col justify-center transition-transform duration-300 hover:-translate-y-1">
               <p className="text-lg md:text-xl font-bold uppercase tracking-[0.2em]">Balance</p>
               <p className="text-xs md:text-sm font-medium normal-case tracking-normal text-[#232323]/70 leading-relaxed mt-0 max-h-0 opacity-0 group-hover:mt-3 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-500">
-                Presence over stability. The moment in front of you is the only one that's real.
+                Finding the harmony in all aspects of life.
               </p>
             </div>
             <div className="group relative overflow-hidden hairline bg-[#0A1B10] text-[#F6F6F4] px-6 py-8 shadow-lg sm:basis-[27.5%] flex flex-col justify-center transition-transform duration-300 hover:-translate-y-1">
               <p className="text-sm md:text-base font-bold uppercase tracking-[0.15em]">Always Curious</p>
               <p className="text-xs font-medium normal-case tracking-normal text-[#F6F6F4]/70 leading-relaxed mt-0 max-h-0 opacity-0 group-hover:mt-3 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-500">
-                Say yes first, ask why later. Everything happens exactly when it's supposed to.
+                Yes now, sort out the reasons later. Most of it makes sense in hindsight anyway.
               </p>
             </div>
           </div>
@@ -467,7 +467,9 @@ const App = () => {
 
         {/* Dynamic Grid Layout for Briefs */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {caseCompetitions.map((comp, idx) => (
+          {caseCompetitions.map((comp, idx) => {
+            const isCentered = comp.title === 'LazCup' || comp.title === 'Greenovation Challenge';
+            return (
             <div key={idx} className="bg-[#F6F6F4] hairline p-5 group snap-shadow flex flex-col relative h-full">
 
               {/* Image & Hover Logo Banner */}
@@ -491,8 +493,8 @@ const App = () => {
               </div>
 
               {/* Text Meta */}
-              <div className="flex-grow flex flex-col">
-                <div className="flex justify-between items-center text-[9px] font-bold tracking-widest uppercase text-[#232323]/50 border-b border-[#232323]/10 pb-2 mb-3">
+              <div className={`flex-grow flex flex-col ${isCentered ? 'items-center text-center' : ''}`}>
+                <div className={`flex items-center text-[9px] font-bold tracking-widest uppercase text-[#232323]/50 border-b border-[#232323]/10 pb-2 mb-3 ${isCentered ? 'justify-center gap-4' : 'justify-between'}`}>
                   <span className="text-[#0A1B10]">{comp.focus}</span>
                   <span>{comp.date}</span>
                 </div>
@@ -504,13 +506,14 @@ const App = () => {
                   {comp.company}
                 </h4>
 
-                <p className="text-sm font-medium text-[#232323]/80 leading-relaxed mb-4 mt-auto border-l-2 border-[#232323]/20 pl-3">
+                <p className={`text-sm font-medium text-[#232323]/80 leading-relaxed mb-4 mt-auto ${isCentered ? 'max-w-[85%]' : 'border-l-2 border-[#232323]/20 pl-3'}`}>
                   {comp.desc}
                 </p>
               </div>
 
             </div>
-          ))}
+            );
+          })}
         </div>
 
       </section>
@@ -729,11 +732,11 @@ const App = () => {
                 Co-President. <br/> <span className="text-[#BA9A5A]">25-Person Team.</span>
               </h3>
               <p className="text-xs font-bold tracking-widest uppercase text-[#232323]/50 mb-8">
-                "130,000+ IMPRESSIONS DRIVEN"
+                "130,000+ IMPRESSIONS"
               </p>
 
               <p className="text-sm font-medium text-[#232323]/80 leading-relaxed mb-8 border-l-2 border-[#BA9A5A] pl-4">
-                Leading the Alumni Mentorship Program as Co-President, owning day-to-day operations for a 25-person team while engineering the organic reach strategy behind 130K+ impressions in 30 days.
+                Co-President of a 25-person team running the Alumni Mentorship Program. Owns day-to-day operations, plus the organic content push that hit 130K+ impressions in 30 days.
               </p>
 
               <div className="flex items-center justify-between text-[10px] font-bold tracking-widest uppercase text-[#232323] border-t border-[#232323]/10 pt-4">
