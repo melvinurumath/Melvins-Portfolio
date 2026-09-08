@@ -304,10 +304,13 @@ const App = () => {
 
           <div className="flex flex-col items-center justify-center mb-6">
             <p className="text-2xl md:text-4xl font-medium text-[#232323] tracking-tight max-w-2xl leading-snug">
-              3rd Year BBA Student.
+              4th Year BBA Student.
             </p>
             <p className="text-xl md:text-2xl font-medium text-[#232323]/60 tracking-tight mt-2">
-              Wilfrid Laurier University.
+              Wilfrid Laurier University
+            </p>
+            <p className="text-sm md:text-base font-bold uppercase tracking-widest text-[#BA9A5A] mt-2">
+              On Exchange @ NEOMA Business School, Rouen, France
             </p>
           </div>
 
